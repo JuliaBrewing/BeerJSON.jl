@@ -110,7 +110,130 @@ recipe.name, recipe.type</code></pre><pre class="documenter-example-output"><cod
 │        └─ step_time: 15 min
 └─ boil:
    ├─ pre_boil_size: 30.3767 l
-   └─ boil_time: 90 min</code></pre><p>Numbers are shown with 6 significant digits there, as in other compact displays; the values themselves are not rounded. The tree of the whole document, with no lists shortened, is printed with <code>show(stdout, MIME&quot;text/plain&quot;(), doc)</code>.</p><p>The one-line form, used inside vectors and by <code>repr</code>, is a call to the constructor, which can be evaluated back:</p><pre><code class="language-julia hljs">repr(recipe.batch_size)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;VolumeType(VolumeUnitType(\&quot;l\&quot;), 19.0028767)&quot;</code></pre><p>and <code>print</code>, <code>string</code> and string interpolation give the value and the unit of a measurement:</p><pre><code class="language-julia hljs">println(&quot;Batch size: &quot;, recipe.batch_size)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Batch size: 19.0028767 l</code></pre><p>The fields of the types are those of the schema, with optional ones <code>nothing</code> when absent:</p><pre><code class="language-julia hljs">fieldnames(RecipeType)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(:name, :type, :author, :coauthor, :created, :batch_size, :efficiency, :style, :ingredients, :mash, :notes, :original_gravity, :final_gravity, :alcohol_by_volume, :ibu_estimate, :color_estimate, :beer_pH, :carbonation, :apparent_attenuation, :fermentation, :packaging, :boil, :taste, :calories_per_pint)</code></pre><p>Enumerations are wrapper types, with the value in the field <code>value</code>:</p><pre><code class="language-julia hljs">recipe.type.value</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;all grain&quot;</code></pre><h2 id="Style-and-batch-size"><a class="docs-heading-anchor" href="#Style-and-batch-size">Style and batch size</a><a id="Style-and-batch-size-1"></a><a class="docs-heading-anchor-permalink" href="#Style-and-batch-size" title="Permalink"></a></h2><pre><code class="language-julia hljs">style = recipe.style
+   └─ boil_time: 90 min</code></pre><p>Numbers are shown with 6 significant digits there, as in other compact displays; the values themselves are not rounded. The tree of the whole document, with no lists shortened, is printed with <code>show(stdout, MIME&quot;text/plain&quot;(), doc)</code>.</p><p>Every part of a recipe is shown in the same way. The ingredients:</p><pre><code class="language-julia hljs">recipe.ingredients</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">IngredientsType
+├─ fermentable_additions (3 items)
+│  ├─ [1] Pilsner (2 Row) Ger
+│  │  ├─ type: grain
+│  │  ├─ origin: Germany
+│  │  ├─ producer: &quot;&quot;
+│  │  ├─ yield:
+│  │  │  └─ potential: 1.03726 sg
+│  │  ├─ color: 2.0 Lovi
+│  │  ├─ amount: 3.24129 kg
+│  │  └─ _extra (not in the schema):
+│  │     ├─ group: base
+│  │     └─ add_after_boil: false
+│  ├─ [2] Vienna Malt
+│  │  ├─ type: grain
+│  │  ├─ origin: Germany
+│  │  ├─ producer: &quot;&quot;
+│  │  ├─ yield:
+│  │  │  └─ potential: 1.03588 sg
+│  │  ├─ color: 3.49746 Lovi
+│  │  ├─ amount: 0.864019 kg
+│  │  └─ _extra (not in the schema):
+│  │     ├─ group: base
+│  │     └─ add_after_boil: false
+│  └─ [3] Cara-Pils/Dextrine
+│     ├─ type: grain
+│     ├─ origin: US
+│     ├─ producer: &quot;&quot;
+│     ├─ yield:
+│     │  └─ potential: 1.03312 sg
+│     ├─ color: 2.0 Lovi
+│     ├─ amount: 0.216412 kg
+│     └─ _extra (not in the schema):
+│        ├─ group: base
+│        └─ add_after_boil: false
+├─ hop_additions (2 items)
+│  ├─ [1] Hallertauer
+│  │  ├─ origin: Germany
+│  │  ├─ form: pellet
+│  │  ├─ alpha_acid: 4.8 %
+│  │  ├─ beta_acid: 4.0 %
+│  │  ├─ timing:
+│  │  │  ├─ time: 60 min
+│  │  │  └─ use: add_to_boil
+│  │  ├─ amount: 0.0332677 kg
+│  │  └─ _extra (not in the schema):
+│  │     └─ use: boil
+│  └─ [2] Hallertauer
+│     ├─ origin: Germany
+│     ├─ form: pellet
+│     ├─ alpha_acid: 4.8 %
+│     ├─ beta_acid: 4.0 %
+│     ├─ timing:
+│     │  ├─ time: 20 min
+│     │  └─ use: add_to_boil
+│     ├─ amount: 0.0166339 kg
+│     └─ _extra (not in the schema):
+│        └─ use: boil
+├─ miscellaneous_additions (1 item)
+│  └─ [1] Whirlfloc Tablet
+│     ├─ type: fining
+│     ├─ amount: 0.412685 l
+│     └─ _extra (not in the schema):
+│        └─ use: boil
+└─ culture_additions (1 item)
+   └─ [1] German Ale
+      ├─ type: ale
+      ├─ form: liquid
+      ├─ attenuation: 75.0 %
+      └─ amount: 0.12421 l</code></pre><p>A list of records, below the usual summary line of a vector, such as the hop additions:</p><pre><code class="language-julia hljs">recipe.ingredients.hop_additions</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">2-element Vector{HopAdditionType{Int64, Float64}}:
+├─ [1] Hallertauer
+│  ├─ origin: Germany
+│  ├─ form: pellet
+│  ├─ alpha_acid: 4.8 %
+│  ├─ beta_acid: 4.0 %
+│  ├─ timing:
+│  │  ├─ time: 60 min
+│  │  └─ use: add_to_boil
+│  ├─ amount: 0.0332677 kg
+│  └─ _extra (not in the schema):
+│     └─ use: boil
+└─ [2] Hallertauer
+   ├─ origin: Germany
+   ├─ form: pellet
+   ├─ alpha_acid: 4.8 %
+   ├─ beta_acid: 4.0 %
+   ├─ timing:
+   │  ├─ time: 20 min
+   │  └─ use: add_to_boil
+   ├─ amount: 0.0166339 kg
+   └─ _extra (not in the schema):
+      └─ use: boil</code></pre><p>The mash, with its steps, and a single step:</p><pre><code class="language-julia hljs">recipe.mash</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">MashProcedureType &quot;BIAB, Light Body&quot;
+├─ grain_temperature: 22.2 C
+├─ notes: Brew in a bag method where the full boil volume is mashed wi…
+└─ mash_steps (3 items)
+   ├─ [1] Saccharification
+   │  ├─ type: infusion
+   │  ├─ amount: 33.0186 l
+   │  ├─ step_temperature: 65.5556 C
+   │  ├─ step_time: 90 min
+   │  ├─ ramp_time: 10 min
+   │  └─ end_temperature: 65.5556 C
+   ├─ [2] Mash Out
+   │  ├─ type: temperature
+   │  ├─ amount: 0.0 l
+   │  ├─ step_temperature: 75.5556 C
+   │  ├─ step_time: 10 min
+   │  ├─ ramp_time: 7 min
+   │  └─ end_temperature: 75.5556 C
+   └─ [3] Sparge
+      ├─ type: sparge
+      ├─ step_temperature: 75.6 C
+      └─ step_time: 15 min</code></pre><pre><code class="language-julia hljs">recipe.mash.mash_steps[1]</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">MashStepType &quot;Saccharification&quot;
+├─ type: infusion
+├─ amount: 33.0186 l
+├─ step_temperature: 65.5556 C
+├─ step_time: 90 min
+├─ ramp_time: 10 min
+└─ end_temperature: 65.5556 C</code></pre><p>The boil and the style:</p><pre><code class="language-julia hljs">recipe.boil</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">BoilProcedureType
+├─ pre_boil_size: 30.3767 l
+└─ boil_time: 90 min</code></pre><pre><code class="language-julia hljs">recipe.style</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">RecipeStyleType &quot;K&amp;#246;lsch&quot;
+├─ category: Light Hybrid Beer
+├─ style_guide: BJCP 2008
+└─ type: beer</code></pre><p>And a single measurement:</p><pre><code class="language-julia hljs">recipe.batch_size</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">VolumeType: 19.0029 l</code></pre><p>The one-line form, used by <code>repr</code> and inside other containers, such as tuples, is a call to the constructor, which can be evaluated back:</p><pre><code class="language-julia hljs">repr(recipe.batch_size)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;VolumeType(VolumeUnitType(\&quot;l\&quot;), 19.0028767)&quot;</code></pre><p>and <code>print</code>, <code>string</code> and string interpolation give the value and the unit of a measurement:</p><pre><code class="language-julia hljs">println(&quot;Batch size: &quot;, recipe.batch_size)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Batch size: 19.0028767 l</code></pre><p>The fields of the types are those of the schema, with optional ones <code>nothing</code> when absent:</p><pre><code class="language-julia hljs">fieldnames(RecipeType)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(:name, :type, :author, :coauthor, :created, :batch_size, :efficiency, :style, :ingredients, :mash, :notes, :original_gravity, :final_gravity, :alcohol_by_volume, :ibu_estimate, :color_estimate, :beer_pH, :carbonation, :apparent_attenuation, :fermentation, :packaging, :boil, :taste, :calories_per_pint)</code></pre><p>Enumerations are wrapper types, with the value in the field <code>value</code>:</p><pre><code class="language-julia hljs">recipe.type.value</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;all grain&quot;</code></pre><h2 id="Style-and-batch-size"><a class="docs-heading-anchor" href="#Style-and-batch-size">Style and batch size</a><a id="Style-and-batch-size-1"></a><a class="docs-heading-anchor-permalink" href="#Style-and-batch-size" title="Permalink"></a></h2><pre><code class="language-julia hljs">style = recipe.style
 style.name, style.category, style.style_guide</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(&quot;K&amp;#246;lsch&quot;, &quot;Light Hybrid Beer&quot;, &quot;BJCP 2008&quot;)</code></pre><p>Measurements have a <code>unit</code>, from the units of the schema, and a <code>value</code>:</p><pre><code class="language-julia hljs">recipe.batch_size</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">VolumeType: 19.0029 l</code></pre><pre><code class="language-julia hljs">recipe.batch_size.value, recipe.batch_size.unit.value</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(19.0028767, &quot;l&quot;)</code></pre><h2 id="Fermentables,-hops-and-mash-steps"><a class="docs-heading-anchor" href="#Fermentables,-hops-and-mash-steps">Fermentables, hops and mash steps</a><a id="Fermentables,-hops-and-mash-steps-1"></a><a class="docs-heading-anchor-permalink" href="#Fermentables,-hops-and-mash-steps" title="Permalink"></a></h2><pre><code class="language-julia hljs">for f in recipe.ingredients.fermentable_additions
     println(rpad(f.name, 24), f.amount, &quot;, &quot;, f.color)
 end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Pilsner (2 Row) Ger     3.2412931 kg, 2.0 Lovi
@@ -125,4 +248,4 @@ Hallertauer     0.0166339 kg, alpha acid 4.8 %, add_to_boil 20 min</code></pre><
 end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Saccharification        infusion: 65.5555556 C for 90 min
 Mash Out                temperature: 75.5555556 C for 10 min
 Sparge                  sparge: 75.6 C for 15 min</code></pre><h2 id="Unknown-properties"><a class="docs-heading-anchor" href="#Unknown-properties">Unknown properties</a><a id="Unknown-properties-1"></a><a class="docs-heading-anchor-permalink" href="#Unknown-properties" title="Permalink"></a></h2><p>Properties that are not in the schema (where the schema allows them) are kept in the field <code>_extra</code>, so that nothing is lost when a document is read and written back:</p><pre><code class="language-julia hljs">recipe.ingredients.hop_additions[1]._extra</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Dict{String, Any} with 1 entry:
-  &quot;use&quot; =&gt; &quot;boil&quot;</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Overview</a><a class="docs-footer-nextpage" href="../changing/">Changing values »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.20.0 on <span class="colophon-date" title="Monday 16 November 2026 22:14">Monday 16 November 2026</span>. Using Julia version 1.13.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+  &quot;use&quot; =&gt; &quot;boil&quot;</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Overview</a><a class="docs-footer-nextpage" href="../changing/">Changing values »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.20.0 on <span class="colophon-date" title="Monday 16 November 2026 22:41">Monday 16 November 2026</span>. Using Julia version 1.13.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
