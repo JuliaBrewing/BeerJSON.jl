@@ -34,6 +34,19 @@ julia> recipe = doc.beerjson.recipes[1];
 julia> recipe.name, recipe.batch_size
 ("Lloyd&#39;s Krispy Kolsch", VolumeType(VolumeUnitType("l"), 19.0028767))
 
+julia> recipe.ingredients.hop_additions[1]              # records are shown as trees
+HopAdditionType "Hallertauer"
+├─ origin: Germany
+├─ form: pellet
+├─ alpha_acid: 4.8 %
+├─ beta_acid: 4.0 %
+├─ timing:
+│  ├─ time: 60 min
+│  └─ use: add_to_boil
+├─ amount: 0.0332677 kg
+└─ _extra (not in the schema):
+   └─ use: boil
+
 julia> recipe2 = setfields(recipe; batch_size = (unit = "litre", value = 40));  # not checked...
 
 julia> violations(recipe2)
