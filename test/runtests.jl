@@ -8,6 +8,7 @@ const SAMPLE_FILES = [joinpath(dir, f) for dir in readdir(SAMPLES; join = true) 
 
 @testset "BeerJSON.jl" begin
     include("documents.jl")
+    include("show.jl")
     include("generated.jl")
     include("unitful.jl")
 end

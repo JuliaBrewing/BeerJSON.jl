@@ -26,6 +26,7 @@ for name in names(BeerJSONTypes)
     @eval export $name
 end
 
+include("show.jl")
 include("unitful_api.jl")
 
 end # module BeerJSON
