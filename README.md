@@ -2,6 +2,8 @@
 
 [![Docs](https://img.shields.io/badge/docs-dev-blue.svg)](https://rmsrosa.github.io/BeerJSON.jl/dev/)
 [![CI](https://github.com/rmsrosa/BeerJSON.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/rmsrosa/BeerJSON.jl/actions/workflows/CI.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![GitHub repo size](https://img.shields.io/github/repo-size/rmsrosa/BeerJSON.jl)
 
 Julia types for reading, writing and validating [BeerJSON](https://github.com/beerjson/beerjson)
 1.0.1 documents, generated from the official JSON Schema with
