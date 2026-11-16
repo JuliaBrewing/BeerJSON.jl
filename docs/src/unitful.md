@@ -189,10 +189,18 @@ unsupported_units(CarbonationUnitType)
 ```
 
 * the imperial volumes (`ifloz`, `ipt`, `iqt`, `igal`, `ibbl`): UnitfulBrewing defines
-  `ifloz` as a length (28.4130625 mm instead of mL), so they have the wrong dimension;
+  `ifloz` as a length (28.4130625 mm instead of mL), so they have the wrong dimension
+  ([UnitfulBrewing.jl#3](https://github.com/JuliaBrewing/UnitfulBrewing.jl/issues/3));
 * the barrel (`bbl`): UnitfulBrewing defines it as 42 US gallons, the barrel of oil, instead
-  of the US beer barrel of 31 US gallons;
+  of the US beer barrel of 31 US gallons
+  ([UnitfulBrewing.jl#4](https://github.com/JuliaBrewing/UnitfulBrewing.jl/issues/4));
 * volumes of CO₂ (`vols`): UnitfulBrewing does not define them yet, nor their equivalence
-  with g/l.
+  with g/l
+  ([UnitfulBrewing.jl#5](https://github.com/JuliaBrewing/UnitfulBrewing.jl/issues/5)).
 
 These are to be fixed in UnitfulBrewing, and then supported here.
+
+Also, `u"ppm"` and `u"ppb"` warn when UnitfulBrewing is loaded, since both Unitful and
+UnitfulBrewing define them
+([UnitfulBrewing.jl#6](https://github.com/JuliaBrewing/UnitfulBrewing.jl/issues/6)): use
+`UnitfulBrewing.ppm` meanwhile. The extension itself uses UnitfulBrewing's units directly.
