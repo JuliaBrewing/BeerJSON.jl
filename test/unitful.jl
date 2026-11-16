@@ -1,8 +1,6 @@
 using Unitful
 using UnitfulBrewing
-using UnitfulBrewing: SugarGravity, SugarGravityQuad, DensityConcentration
-# (`u"ppm"` warns, since both Unitful and UnitfulBrewing define `ppm`)
-const ppm = UnitfulBrewing.ppm
+using UnitfulBrewing: SugarGravity, SugarGravityQuad, DensityConcentration, CarbonationDensity
 
 const EXT = Base.get_extension(BeerJSON, :BeerJSONUnitfulExt)
 const ENUMVALUES = BeerJSON.BeerJSONTypes._enumvalues
@@ -33,9 +31,8 @@ const ENUMVALUES = BeerJSON.BeerJSONTypes._enumvalues
         end
         @test_throws "is not a BeerJSON unit" unitful_unit(U, "furlong")
     end
-    @test Set(keys(unsupported_units(VolumeUnitType))) == Set(["ifloz", "ipt", "iqt", "igal", "ibbl", "bbl"])
-    @test Set(keys(unsupported_units(CarbonationUnitType))) == Set(["vols"])
-    @test sum(length(unsupported_units(U)) for U in units) == 7
+    # every unit of BeerJSON has a Unitful counterpart
+    @test all(isempty(unsupported_units(U)) for U in units)
 end
 
 @testset "Round trips" begin
@@ -105,6 +102,14 @@ end
     @test conv(VolumeType, 1u"tbsp", "tsp") ≈ 3
     @test conv(VolumeType, 1u"floz", "ml") ≈ 29.5735295625
     @test conv(VolumeType, 1u"qt", "pt") ≈ 2
+    @test conv(VolumeType, 1u"bbl", "gal") ≈ 31                    # the US beer barrel
+    @test conv(VolumeType, 1u"bbl", "l") ≈ 117.347765304
+    @test conv(VolumeType, 1u"ifloz", "ml") ≈ 28.4130625
+    @test conv(VolumeType, 1u"igal", "l") ≈ 4.54609
+    @test conv(VolumeType, 1u"ipt", "ifloz") ≈ 20
+    @test conv(VolumeType, 1u"iqt", "ipt") ≈ 2
+    @test conv(VolumeType, 1u"ibbl", "igal") ≈ 36
+    @test conv(VolumeType, 1u"ibbl", "l") ≈ 163.65924
     @test conv(MassType, 1u"lb", "g") ≈ 453.59237
     @test conv(MassType, 1u"lb", "oz") ≈ 16
     # time
@@ -140,12 +145,17 @@ end
     @test conv(DiastaticPowerType, 334u"°WK", "Lintner") ≈ 100
     # concentration: ppm and mg/l by an equivalence
     @test conv(ConcentrationType, 10u"mg/L", "ppm") ≈ 10
-    @test conv(ConcentrationType, 2ppm, "mg/l") ≈ 2
-    @test conv(ConcentrationType, 1ppm, "ppb") ≈ 1000
+    @test conv(ConcentrationType, 2u"ppm", "mg/l") ≈ 2
+    @test conv(ConcentrationType, 1u"ppm", "ppb") ≈ 1000
     @test_throws ArgumentError ConcentrationType(1u"g"; unit = "ppm")
     # others
     @test conv(CarbonationType, 5u"g/L", "g/l") ≈ 5
-    @test_throws "has no Unitful counterpart" CarbonationType(5u"g/L"; unit = "vols")
+    # carbonation: volumes of CO₂ and g/l by an equivalence
+    @test conv(CarbonationType, 2.5u"vols", "g/l") ≈ 2.5 * 1.977
+    @test conv(CarbonationType, 4.9425u"g/L", "vols") ≈ 2.5
+    @test conv(CarbonationType, 2.5u"vols", "g/l") ≈ ustrip(u"g/L", uconvert(u"g/L", 2.5u"vols", CarbonationDensity()))
+    @test CarbonationType(2.5u"vols") == CarbonationType(unit = "vols", value = 2.5)
+    @test_throws ArgumentError CarbonationType(2.5u"vols"; unit = "g/l", equivalence = nothing)
     @test conv(BitternessType, 40u"IBU", "IBUs") == 40
     @test conv(SpecificHeatType, 1u"cal/(g*K)", "J/(kg K)") ≈ 4184
     @test conv(SpecificHeatType, 1u"btu/(lb*Ra)", "J/(kg K)") ≈ 4186.8 rtol = 1e-5

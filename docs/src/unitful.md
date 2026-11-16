@@ -76,7 +76,7 @@ number in the chosen unit:
 TimeType(1.5u"hr"; unit = "min")
 ```
 
-## Equivalences: gravity and concentration
+## Equivalences: gravity, concentration and carbonation
 
 Specific gravity and degrees Plato (or Brix) measure different things, and are not related
 by a factor: UnitfulBrewing gives them different dimensions and converts between them with
@@ -115,6 +115,14 @@ takes 1 ppm as 1 mg/l:
 ConcentrationType(150u"mg/L"; unit = "ppm")
 ```
 
+Carbonation in volumes of CO₂ per volume of beer and in g/l is converted with
+`CarbonationDensity()`, which takes 1 vols as 1.977 g/l (the density of CO₂ at 0 °C and
+1 atm):
+
+```@example unitful
+CarbonationType(2.5u"vols"; unit = "g/l")
+```
+
 Colors in EBC are proportional to SRM, and degrees Lovibond are affine in SRM, so these are
 plain unit conversions in UnitfulBrewing:
 
@@ -141,8 +149,8 @@ quantity(AcidityType(unit = "pH", value = 5.4))
 
 ## The tables
 
-`unit_table(U)` gives the Unitful unit of each BeerJSON unit of the unit enumeration `U`,
-and `unsupported_units(U)` the units without one, with the reason. `unitful_unit` gives the
+`unit_table(U)` gives the Unitful unit of each BeerJSON unit of the unit enumeration `U`
+(and `unsupported_units(U)` the units without one, with the reason: none, currently). `unitful_unit` gives the
 unit of a single BeerJSON unit:
 
 ```@example unitful
@@ -169,7 +177,10 @@ Markdown.parse(join(rows, "\n"))
 Some notes on the choices:
 
 * Volumes in `tsp`, `tbsp`, `floz`, `cup`, `pt`, `qt` and `gal` are US customary units
-  (the cup is 8 US fluid ounces).
+  (the cup is 8 US fluid ounces), and `bbl` is the US beer barrel of 31 US gallons. The
+  imperial volumes are `ifloz`, `ipt`, `iqt`, `igal`, and `ibbl`, the imperial beer barrel
+  of 36 imperial gallons.
+* `ppm` and `ppb` are Unitful's own units.
 * In the specific heats, `"Cal/(g C)"` is taken as the calorie (4.184 J) per gram and
   kelvin, so that water has a specific heat of about 1 in it as in `"BTU/(lb F)"`, and the
   `C` and `F` are differences of temperatures (kelvin and rankine).
@@ -177,30 +188,6 @@ Some notes on the choices:
 
 ## Unsupported units
 
-Some units of BeerJSON have no correct counterpart in UnitfulBrewing yet; using them throws
-an `ArgumentError` with the reason:
-
-```@example unitful
-unsupported_units(VolumeUnitType)
-```
-
-```@example unitful
-unsupported_units(CarbonationUnitType)
-```
-
-* the imperial volumes (`ifloz`, `ipt`, `iqt`, `igal`, `ibbl`): UnitfulBrewing defines
-  `ifloz` as a length (28.4130625 mm instead of mL), so they have the wrong dimension
-  ([UnitfulBrewing.jl#3](https://github.com/JuliaBrewing/UnitfulBrewing.jl/issues/3));
-* the barrel (`bbl`): UnitfulBrewing defines it as 42 US gallons, the barrel of oil, instead
-  of the US beer barrel of 31 US gallons
-  ([UnitfulBrewing.jl#4](https://github.com/JuliaBrewing/UnitfulBrewing.jl/issues/4));
-* volumes of CO₂ (`vols`): UnitfulBrewing does not define them yet, nor their equivalence
-  with g/l
-  ([UnitfulBrewing.jl#5](https://github.com/JuliaBrewing/UnitfulBrewing.jl/issues/5)).
-
-These are to be fixed in UnitfulBrewing, and then supported here.
-
-Also, `u"ppm"` and `u"ppb"` warn when UnitfulBrewing is loaded, since both Unitful and
-UnitfulBrewing define them
-([UnitfulBrewing.jl#6](https://github.com/JuliaBrewing/UnitfulBrewing.jl/issues/6)): use
-`UnitfulBrewing.ppm` meanwhile. The extension itself uses UnitfulBrewing's units directly.
+Every unit of BeerJSON 1.0.1 has a Unitful counterpart. Should a unit be missing in
+UnitfulBrewing (say, in a later version of the schema), it would be listed by
+`unsupported_units(U)`, with the reason, and using it would throw an `ArgumentError`.

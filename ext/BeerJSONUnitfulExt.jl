@@ -52,24 +52,17 @@ UnitTable(units, default; unsupported = Dict{String, String}(), equivalence = no
     UnitTable(Dict{String, Any}(units), Dict{String, String}(unsupported), default,
               equivalence, dimensionless === nothing ? nothing : collect(Any, dimensionless))
 
-const IMPERIAL_REASON = "UnitfulBrewing defines `ifloz` as a length (28.4130625 mm) " *
-    "instead of a volume, so its imperial volumes (ifloz, ipt, iqt, igal, ibbl) have " *
-    "the dimension of a length"
-
-const BARREL_REASON = "UnitfulBrewing defines `bbl` as 42 US gallons, the barrel of oil, " *
-    "instead of the US beer barrel of 31 US gallons"
-
 # The tables, one per unit enumeration of the schema, with the unit strings of the
 # enumerations (`BeerJSONTypes._enumvalues(VolumeUnitType)`, ...). The tests check that
-# every unit string is in `units` or in `unsupported`.
+# every unit string is in `units` or in `unsupported` (none are unsupported now).
 const TABLES = Dict{DataType, UnitTable}(
     VolumeUnitType => UnitTable(
         ["ml" => u"mL", "l" => u"L",
          "tsp" => UB.tsp, "tbsp" => UB.tbsp, "floz" => UB.floz, "cup" => UB.cup,
-         "pt" => UB.pt, "qt" => UB.qt, "gal" => UB.gal],
-        "l";
-        unsupported = [[u => IMPERIAL_REASON for u in ("ifloz", "ipt", "iqt", "igal", "ibbl")];
-                       "bbl" => BARREL_REASON]),
+         "pt" => UB.pt, "qt" => UB.qt, "gal" => UB.gal, "bbl" => UB.bbl,
+         "ifloz" => UB.ifloz, "ipt" => UB.ipt, "iqt" => UB.iqt, "igal" => UB.igal,
+         "ibbl" => UB.ibbl],
+        "l"),
     MassUnitType => UnitTable(
         ["mg" => u"mg", "g" => u"g", "kg" => u"kg", "lb" => u"lb", "oz" => u"oz"],
         "kg"),
@@ -85,15 +78,14 @@ const TABLES = Dict{DataType, UnitTable}(
     ColorUnitType => UnitTable(["EBC" => UB.EBC, "Lovi" => UB.°L, "SRM" => UB.SRM], "SRM"),
     DiastaticPowerUnitType => UnitTable(["Lintner" => UB.°Lintner, "WK" => UB.°WK], "Lintner"),
     ConcentrationUnitType => UnitTable(
-        ["ppm" => UB.ppm, "ppb" => UB.ppb, "mg/l" => u"mg/L"],
+        ["ppm" => u"ppm", "ppb" => u"ppb", "mg/l" => u"mg/L"],
         "ppm";
         equivalence = UB.DensityConcentration()),
     BitternessUnitType => UnitTable(["IBUs" => UB.IBU], "IBUs"),
     CarbonationUnitType => UnitTable(
-        ["g/l" => u"g/L"],
+        ["vols" => UB.vols, "g/l" => u"g/L"],
         "g/l";
-        unsupported = ["vols" => "UnitfulBrewing does not define volumes of CO₂ per " *
-                       "volume of beer, nor their equivalence with g/l"]),
+        equivalence = UB.CarbonationDensity()),
     PercentUnitType => UnitTable(["%" => u"percent"], "%"),
     AcidityUnitType => UnitTable(["pH" => UB.pH⁺], "pH"),
     # "Cal" is the calorie of the specific heat of water, 1 Cal/(g C), as for "BTU/(lb F)",
