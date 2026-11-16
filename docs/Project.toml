@@ -1,0 +1,18 @@
+[deps]
+Accessors = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
+BeerJSON = "83d47a54-5cce-4e4c-8759-0d683d4236f2"
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+UnitfulBrewing = "0971afc3-6d60-4b49-b3a1-be0ef054b0bb"
+
+[sources]
+BeerJSON = {path = ".."}
+UnitfulBrewing = {rev = "main", url = "https://github.com/JuliaBrewing/UnitfulBrewing.jl"}
+
+[compat]
+Accessors = "0.1"
+Documenter = "1"
+JSON = "1"
+Unitful = "1"
