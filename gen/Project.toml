@@ -1,0 +1,7 @@
+[deps]
+JSONSchema2Types = "38c7664c-84d6-45d1-bcea-a9d5c42a5a74"
+
+[sources.JSONSchema2Types]
+url = "https://github.com/rmsrosa/JSONSchema2Types.jl"
+rev = "e23f21cb5333541cde52c2dd8302e5560e2cf22a"
+

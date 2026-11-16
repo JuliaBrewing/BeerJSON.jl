@@ -1,0 +1,63 @@
+name: CI
+on:
+  push:
+    branches: [main]
+    tags: ['*']
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+jobs:
+  test:
+    name: Julia ${{ matrix.version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ['1.10', '1']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: ${{ matrix.version }}
+      - uses: julia-actions/cache@v2
+      # JSONSchema2Types and UnitfulBrewing are not registered: Julia 1.11 and later get
+      # them from the `[sources]` of `test/Project.toml`, which Julia 1.10 ignores
+      - name: Install the test environment (Julia 1.10)
+        if: matrix.version == '1.10'
+        run: |
+          julia -e '
+            using Pkg
+            Pkg.activate("test110")
+            Pkg.add([PackageSpec(url = "https://github.com/rmsrosa/JSONSchema2Types.jl",
+                                 rev = "e23f21cb5333541cde52c2dd8302e5560e2cf22a"),
+                     PackageSpec(url = "https://github.com/JuliaBrewing/UnitfulBrewing.jl")])
+            Pkg.develop(path = ".")
+            Pkg.add(["Accessors", "JSON", "Test", "Unitful"])'
+          echo "TEST_PROJECT=test110" >> "$GITHUB_ENV"
+      - name: Install the test environment
+        if: matrix.version != '1.10'
+        run: |
+          julia --project=test -e 'using Pkg; Pkg.instantiate()'
+          echo "TEST_PROJECT=test" >> "$GITHUB_ENV"
+      - name: Run the tests
+        run: julia --project=$TEST_PROJECT --check-bounds=yes test/runtests.jl
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      statuses: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: '1'
+      - uses: julia-actions/cache@v2
+      - name: Install dependencies
+        run: julia --project=docs -e 'using Pkg; Pkg.instantiate()'
+      - name: Build and deploy
+        run: julia --project=docs docs/make.jl
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
