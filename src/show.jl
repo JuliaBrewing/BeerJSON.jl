@@ -148,6 +148,15 @@ function Base.show(io::IO, ::MIME"text/plain", x::AbstractSchemaObject)
     end
 end
 
+# Vectors of the generated types, such as `recipe.ingredients.hop_additions`, as the
+# usual summary line ("2-element Vector{HopAdditionType{Int64, Float64}}") and a tree of
+# their items, as in the tree of the records that contain them.
+function Base.show(io::IO, ::MIME"text/plain", v::AbstractVector{<:AbstractSchemaObject})
+    summary(io, v)
+    isempty(v) || print(io, ":")
+    _tree(io, v, "")
+end
+
 # --- print and string ---
 
 function _printmeasurement(io::IO, x)

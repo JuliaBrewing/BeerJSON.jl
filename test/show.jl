@@ -55,6 +55,24 @@ plain(x; limit = true) = sprint((io, x) -> show(io, MIME"text/plain"(), x), x; c
     @test occursin("└─ $(n - 5) more\n", out)
     @test occursin("[$n] ", plain(punk; limit = false))
 
+    # vectors of records as trees, below the usual summary line
+    @test startswith(plain(recipe.ingredients.hop_additions), """
+        2-element Vector{HopAdditionType{Int64, Float64}}:
+        ├─ [1] Hallertauer
+        │  ├─ origin: Germany
+        """)
+    @test endswith(plain(recipe.mash.mash_steps), """
+        └─ [3] Sparge
+           ├─ type: sparge
+           ├─ step_temperature: 75.6 C
+           └─ step_time: 15 min""")
+    @test plain(HopAdditionType{Int64, Float64}[]) == "0-element Vector{HopAdditionType{Int64, Float64}}"
+    @test plain([v]) == "1-element Vector{VolumeType{Int64, Float64}}:\n└─ [1]: 20.0 l"
+    @test occursin("└─ $(n - 5) more", plain(punk.ingredients.hop_additions))
+    @test repr([v]) == "VolumeType{Int64, Float64}[VolumeType(VolumeUnitType(\"l\"), 20.0)]"
+    # other vectors are shown as usual
+    @test plain([1, 2]) == sprint(show, MIME"text/plain"(), [1, 2])
+
     # every sample can be displayed
     for file in SAMPLE_FILES
         doc = readjson(RootType, file)

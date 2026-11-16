@@ -37,8 +37,46 @@ Numbers are shown with 6 significant digits there, as in other compact displays;
 values themselves are not rounded. The tree of the whole document, with no lists
 shortened, is printed with `show(stdout, MIME"text/plain"(), doc)`.
 
-The one-line form, used inside vectors and by `repr`, is a call to the constructor, which
-can be evaluated back:
+Every part of a recipe is shown in the same way. The ingredients:
+
+```@example reading
+recipe.ingredients
+```
+
+A list of records, below the usual summary line of a vector, such as the hop additions:
+
+```@example reading
+recipe.ingredients.hop_additions
+```
+
+The mash, with its steps, and a single step:
+
+```@example reading
+recipe.mash
+```
+
+```@example reading
+recipe.mash.mash_steps[1]
+```
+
+The boil and the style:
+
+```@example reading
+recipe.boil
+```
+
+```@example reading
+recipe.style
+```
+
+And a single measurement:
+
+```@example reading
+recipe.batch_size
+```
+
+The one-line form, used by `repr` and inside other containers, such as tuples, is a call
+to the constructor, which can be evaluated back:
 
 ```@example reading
 repr(recipe.batch_size)
