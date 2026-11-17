@@ -17,9 +17,9 @@ BeerJSON standard closely, so that documents are read and written as they are. I
 calculations, and it is kept faithful to the schema, light (it only depends on JSON.jl),
 and easy to regenerate when the schema changes.
 
-The **working layer** is the separate package BrewQuiver.jl (in preparation), with working
-types based on [Unitful.jl](https://github.com/PainterQubits/Unitful.jl) quantities, the
-calculations of a brewing software (in the spirit of
+The **working layer** belongs to the brewing software built on BeerJSON.jl: its working
+types, based, for instance, on [Unitful.jl](https://github.com/PainterQubits/Unitful.jl)
+quantities, its calculations (in the spirit of
 [Brewtarget](https://github.com/Brewtarget/brewtarget)), and the conversions between its
 types and those of BeerJSON.jl.
 

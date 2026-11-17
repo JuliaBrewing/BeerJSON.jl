@@ -4,8 +4,8 @@ With [Unitful.jl](https://github.com/PainterQubits/Unitful.jl) and
 [UnitfulBrewing.jl](https://github.com/JuliaBrewing/UnitfulBrewing.jl) loaded, the package
 extension `BeerJSONUnitfulExt` maps the units of BeerJSON to Unitful units, to display the
 values of a document as quantities, for scripting, and as building blocks for the
-conversions of BrewQuiver.jl. It has no working types, internal units or calculations: those
-belong in BrewQuiver.jl.
+conversions of brewing software built on BeerJSON.jl. It has no working types, internal
+units or calculations: those belong in the brewing software.
 
 UnitfulBrewing is not registered yet: install it with
 `Pkg.add(url = "https://github.com/JuliaBrewing/UnitfulBrewing.jl")`.

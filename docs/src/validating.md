@@ -4,7 +4,7 @@ The constructors of the types only convert the values to the types of their fiel
 enforce the structure of the schema (the types of the properties, the required properties,
 the enumeration types), but not its constraints, such as the values allowed for an
 enumeration, or the minimum number of steps of a mash. This keeps them cheap, which matters
-for the conversions from the working types of BrewQuiver.jl.
+for brewing software that converts its own working types to these.
 
 The checks of the constraints are done by `validate`, `violations` and `isvalid`, and before
 writing.

@@ -10,9 +10,9 @@ Julia types for reading, writing and validating [BeerJSON](https://github.com/be
 [JSONSchema2Types.jl](https://github.com/rmsrosa/JSONSchema2Types.jl).
 
 BeerJSON.jl is an **exchange layer**: its types mirror the schema, for reading and writing
-files, and it only depends on JSON.jl. The **working layer**, with types based on Unitful
-quantities and the calculations for homebrewers, is the separate package BrewQuiver.jl (in
-preparation), which converts between its types and these.
+files, and it only depends on JSON.jl. The **working layer**, with types based, for instance, on
+Unitful quantities and the calculations for homebrewers, belongs to the brewing software
+built on it, which converts between its types and these.
 
 ## Installation
 
