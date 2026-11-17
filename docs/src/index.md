@@ -3,23 +3,24 @@
 Julia types for reading, writing and validating [BeerJSON](https://github.com/beerjson/beerjson)
 1.0.1 documents.
 
-The types are generated from the official BeerJSON 1.0.1 JSON Schema by
+BeerJSON.jl defines a Julia type for each type of the BeerJSON standard, with the same
+fields, enumerations as wrapper types, and the checks of the schema available to validate
+documents before writing them. The code of these types was generated from the official
+BeerJSON 1.0.1 JSON Schema with
 [JSONSchema2Types.jl](https://github.com/rmsrosa/JSONSchema2Types.jl), so that they mirror the
-schema: one Julia type per type of the schema, with the same fields, enumerations as wrapper
-types, and the checks of the schema available to validate documents before writing them.
+schema, and it is part of this package.
 
 ## An exchange layer
 
-BeerJSON.jl is the **exchange layer** of a homebrewing toolkit: its types are the documents
-of BeerJSON as they are, to read and write files. It has no calculations and no types of
-its own, and it is kept faithful to the schema, light (it only depends on JSON.jl), and easy
-to regenerate when the schema changes.
+BeerJSON.jl is an **exchange layer** for homebrewing toolkits: its types follow the
+BeerJSON standard closely, so that documents are read and written as they are. It has no
+calculations, and it is kept faithful to the schema, light (it only depends on JSON.jl),
+and easy to regenerate when the schema changes.
 
-The **working layer** is the separate package BrewQuiver.jl (in preparation), with its own
-types based on [Unitful.jl](https://github.com/PainterQubits/Unitful.jl) quantities, the
-calculations of a brewing software (in the spirit of
-[Brewtarget](https://github.com/Brewtarget/brewtarget)), and the conversions between its
-types and those of BeerJSON.jl.
+A **working layer** belongs to the brewing software built on BeerJSON.jl: its working
+types, based, for instance, on [Unitful.jl](https://github.com/PainterQubits/Unitful.jl)
+quantities, its calculations, and the conversions between its types and those of
+BeerJSON.jl.
 
 Between the two, the [Unitful extension](unitful.md) of BeerJSON.jl maps the units of BeerJSON to
 Unitful units, with the brewing units of

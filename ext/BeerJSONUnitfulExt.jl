@@ -5,7 +5,7 @@ Maps the units of BeerJSON to Unitful.jl units, with the brewing units of Unitfu
 and converts between the measurement types of BeerJSON and Unitful quantities.
 
 This is only the vocabulary of units: the working types and the calculations belong in
-BrewQuiver.jl.
+the brewing software that uses BeerJSON.jl.
 """
 module BeerJSONUnitfulExt
 
