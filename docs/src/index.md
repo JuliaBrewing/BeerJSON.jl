@@ -12,12 +12,12 @@ schema, and it is part of this package.
 
 ## An exchange layer
 
-BeerJSON.jl is the **exchange layer** of a homebrewing toolkit: its types follow the
+BeerJSON.jl is an **exchange layer** for homebrewing toolkits: its types follow the
 BeerJSON standard closely, so that documents are read and written as they are. It has no
 calculations, and it is kept faithful to the schema, light (it only depends on JSON.jl),
 and easy to regenerate when the schema changes.
 
-The **working layer** belongs to the brewing software built on BeerJSON.jl: its working
+A **working layer** belongs to the brewing software built on BeerJSON.jl: its working
 types, based, for instance, on [Unitful.jl](https://github.com/PainterQubits/Unitful.jl)
 quantities, its calculations (in the spirit of
 [Brewtarget](https://github.com/Brewtarget/brewtarget)), and the conversions between its
