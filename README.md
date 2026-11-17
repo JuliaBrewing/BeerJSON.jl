@@ -1,9 +1,9 @@
 # BeerJSON.jl
 
-[![Docs](https://img.shields.io/badge/docs-dev-blue.svg)](https://rmsrosa.github.io/BeerJSON.jl/dev/)
-[![CI](https://github.com/rmsrosa/BeerJSON.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/rmsrosa/BeerJSON.jl/actions/workflows/CI.yml)
+[![Docs](https://img.shields.io/badge/docs-dev-blue.svg)](https://juliabrewing.github.io/BeerJSON.jl/dev/)
+[![CI](https://github.com/JuliaBrewing/BeerJSON.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/JuliaBrewing/BeerJSON.jl/actions/workflows/CI.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![GitHub repo size](https://img.shields.io/github/repo-size/rmsrosa/BeerJSON.jl)
+![GitHub repo size](https://img.shields.io/github/repo-size/JuliaBrewing/BeerJSON.jl)
 
 Julia types for reading, writing and validating [BeerJSON](https://github.com/beerjson/beerjson)
 1.0.1 documents, generated from the official JSON Schema with
@@ -21,7 +21,7 @@ The package is not registered yet:
 ```julia
 julia> using Pkg
 
-julia> Pkg.add(url = "https://github.com/rmsrosa/BeerJSON.jl")
+julia> Pkg.add(url = "https://github.com/JuliaBrewing/BeerJSON.jl")
 ```
 
 ## Usage
@@ -78,7 +78,7 @@ julia> GravityType(1.040u"sg"; unit = "plato")       # through UnitfulBrewing's 
 GravityType(GravityUnitType("plato"), 9.961538461538483)
 ```
 
-See the [documentation](https://rmsrosa.github.io/BeerJSON.jl/dev/) for more.
+See the [documentation](https://juliabrewing.github.io/BeerJSON.jl/dev/) for more.
 
 ## Regenerating the types
 

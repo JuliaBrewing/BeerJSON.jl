@@ -18,7 +18,7 @@ makedocs(
     authors = "Ricardo Rosa",
     format = Documenter.HTML(
         prettyurls = get(ENV, "CI", "false") == "true",
-        canonical = "https://rmsrosa.github.io/BeerJSON.jl",
+        canonical = "https://juliabrewing.github.io/BeerJSON.jl",
         edit_link = "main",
         size_threshold_warn = 400 * 1024,
         size_threshold = 1024 * 1024,
@@ -37,7 +37,7 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/rmsrosa/BeerJSON.jl.git",
+    repo = "github.com/JuliaBrewing/BeerJSON.jl.git",
     devbranch = "main",
     push_preview = false,
 )

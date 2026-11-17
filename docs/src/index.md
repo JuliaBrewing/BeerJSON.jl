@@ -34,7 +34,7 @@ The package is not registered yet. Install it from GitHub:
 ```julia
 julia> using Pkg
 
-julia> Pkg.add(url = "https://github.com/rmsrosa/BeerJSON.jl")
+julia> Pkg.add(url = "https://github.com/JuliaBrewing/BeerJSON.jl")
 ```
 
 ## Quick start
