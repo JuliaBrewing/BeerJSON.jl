@@ -19,9 +19,8 @@ and easy to regenerate when the schema changes.
 
 A **working layer** belongs to the brewing software built on BeerJSON.jl: its working
 types, based, for instance, on [Unitful.jl](https://github.com/PainterQubits/Unitful.jl)
-quantities, its calculations (in the spirit of
-[Brewtarget](https://github.com/Brewtarget/brewtarget)), and the conversions between its
-types and those of BeerJSON.jl.
+quantities, its calculations, and the conversions between its types and those of
+BeerJSON.jl.
 
 Between the two, the [Unitful extension](unitful.md) of BeerJSON.jl maps the units of BeerJSON to
 Unitful units, with the brewing units of
