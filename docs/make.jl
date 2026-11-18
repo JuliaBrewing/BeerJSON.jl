@@ -25,6 +25,7 @@ makedocs(
     ),
     pages = [
         "Overview" => "index.md",
+        "BeerJSON format" => "format.md",
         "Reading a recipe" => "reading.md",
         "Changing values" => "changing.md",
         "Validating and writing" => "validating.md",

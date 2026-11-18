@@ -80,6 +80,25 @@ GravityType(GravityUnitType("plato"), 9.961538461538483)
 
 See the [documentation](https://juliabrewing.github.io/BeerJSON.jl/dev/) for more.
 
+## BeerJSON format
+
+BeerJSON.jl implements BeerJSON format **1.0.1** (the schemas and samples of tag `v1.0.1` of
+[beerjson/beerjson](https://github.com/beerjson/beerjson)). Upstream has since published format
+3.0 (JSON Schema 2020-12, with descriptions for every property and some types closed to unknown
+keys); updating is planned once upstream settles. Clarifications from upstream that also apply
+to 1.0.1 documents:
+
+- `TimingType.time` counts forward from the start of the step for `add_to_mash`,
+  `add_to_fermentation` and `add_to_package`, and backward from the end of the boil for
+  `add_to_boil`, so a 60 min boil addition boils for 60 minutes
+  ([beerjson/beerjson#220](https://github.com/beerjson/beerjson/issues/220)).
+- For a boil addition, `duration` is how long it steeps after the boil (a hop stand), not how
+  long it boils ([beerjson/beerjson#266](https://github.com/beerjson/beerjson/issues/266)).
+
+The bundled samples are copied verbatim from upstream, with some known errors (gravity points
+labelled `sg`, dry hops given as 10080 min boil additions, HTML entities in strings); see
+[BeerJSON format](https://juliabrewing.github.io/BeerJSON.jl/dev/format/) in the docs.
+
 ## Regenerating the types
 
 The generated code in `src/generated/` is committed, and never edited by hand. To regenerate

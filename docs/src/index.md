@@ -10,6 +10,13 @@ BeerJSON 1.0.1 JSON Schema with
 [JSONSchema2Types.jl](https://github.com/rmsrosa/JSONSchema2Types.jl), so that they mirror the
 schema, and it is part of this package.
 
+## BeerJSON format
+
+BeerJSON.jl implements BeerJSON format 1.0.1. Upstream has since published format 3.0, and
+updating is planned once it settles. See [BeerJSON format](format.md) for the clarifications
+from upstream that also apply to 1.0.1 documents, and for the known errors in the bundled
+samples.
+
 ## An exchange layer
 
 BeerJSON.jl is an **exchange layer** for homebrewing toolkits: its types follow the
