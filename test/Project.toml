@@ -7,12 +7,19 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 UnitfulBrewing = "0971afc3-6d60-4b49-b3a1-be0ef054b0bb"
 
-[sources]
-BeerJSON = {path = ".."}
-JSONSchema2Types = {rev = "e23f21cb5333541cde52c2dd8302e5560e2cf22a", url = "https://github.com/rmsrosa/JSONSchema2Types.jl"}
-UnitfulBrewing = {rev = "main", url = "https://github.com/JuliaBrewing/UnitfulBrewing.jl"}
+[sources.BeerJSON]
+path = ".."
+
+[sources.JSONSchema2Types]
+rev = "e23f21cb5333541cde52c2dd8302e5560e2cf22a"
+url = "https://github.com/rmsrosa/JSONSchema2Types.jl"
+
+[sources.UnitfulBrewing]
+rev = "main"
+url = "https://github.com/JuliaBrewing/UnitfulBrewing.jl"
 
 [compat]
 Accessors = "0.1"
 JSON = "1"
+JSONSchema2Types = "0.1"
 Unitful = "1.19"
